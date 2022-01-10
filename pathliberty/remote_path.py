@@ -3,7 +3,7 @@ import abc
 from pathlib import PosixPath
 from typing import Any, Callable
 
-from pathlib_ext.base import AbstractPath
+from pathliberty.base import AbstractPath
 
 class AbstractRemotePath(AbstractPath):
     """ Represents a path that exists on a some remote node """

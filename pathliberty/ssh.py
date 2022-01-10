@@ -1,7 +1,7 @@
 import paramiko
 import getpass
 from typing import Optional
-from pathlib_ext import ssh_config
+from pathliberty import ssh_config
 
 def get_ssh_client(
     dest_host: str,

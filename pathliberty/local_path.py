@@ -1,6 +1,6 @@
 from pathlib import _NormalAccessor
 
-from pathlib_ext.base import AbstractPath, AbstractPathAccessor
+from pathliberty.base import AbstractPath, AbstractPathAccessor
 
 class NormalAccessor(_NormalAccessor, AbstractPathAccessor):
     pass

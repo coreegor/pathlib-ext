@@ -1,7 +1,7 @@
 from _pytest.fixtures import fixture
 import pytest
-from pathlib_ext import ssh_config
-from pathlib_ext.ssh import SSHSession
+from pathliberty import ssh_config
+from pathliberty.ssh import SSHSession
 
 def pytest_addoption(parser):
     parser.addoption("--host", action="store", help="host name", default='localhost')

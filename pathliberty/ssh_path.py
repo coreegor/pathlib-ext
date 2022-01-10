@@ -7,9 +7,9 @@ from time import time
 
 import paramiko
 from typing import Any, Callable, ContextManager, Dict, Iterable, Optional, Tuple, Union
-from pathlib_ext import AbstractPathAccessor
-from pathlib_ext import AbstractRemotePath
-from pathlib_ext.ssh import SSHSession
+from pathliberty import AbstractPathAccessor
+from pathliberty import AbstractRemotePath
+from pathliberty.ssh import SSHSession
 
 
 class SSHAccessor(AbstractPathAccessor):

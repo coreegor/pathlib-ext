@@ -5,7 +5,7 @@ import pytest
 import inspect
 from getpass import getuser
 from socket import gethostname
-from pathlib_ext import SSHPath
+from pathliberty import SSHPath
 
 host = 'localhost'
 parent = f'/home/{getuser()}'
