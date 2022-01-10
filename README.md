@@ -1,2 +1,2 @@
-# pathlib-ext
+# pathliberty
 Extended pathlib module

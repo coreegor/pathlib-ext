@@ -17,11 +17,14 @@ setup(
     include_package_data=True,
     long_description=long_description,
     long_description_content_type='text/markdown',
-    download_url=f'https://github.com/coreegor/pathlib-ext/archive/refs/tags/{version}.tar.gz',
+    download_url=f'https://github.com/coreegor/pathliberty/archive/refs/tags/{version}.tar.gz',
     python_requires='>=3.8',
     install_requires=[
         'paramiko==2.9.2',
     ],
+    project_urls={
+        'Source': 'https://github.com/coreegor/pathliberty',
+    },
     classifiers=[
         'Development Status :: 3 - Alpha',
         'License :: OSI Approved :: MIT License',
