@@ -73,18 +73,6 @@ class SSHAccessor(AbstractPathAccessor):
     def lstat(self, path):
         return self.sftp.lstat(str(path))
 
-    def open(self, mode='r', bufsize=-1, encoding=None, errors=None):
-        if encoding:
-            raise RuntimeError(
-                f"{self.__class__.__name__} doesn't support an 'encoding' parameter. "
-                f"The encoding of the file is assumed to be UTF-8."
-            )
-        if errors:
-            raise RuntimeError(
-                f"{self.__class__.__name__} doesn't support an 'errors' parameter."
-            )
-        return self.sftp.open(str(self), mode=mode, bufsize=bufsize)
-
     def listdir(self, path):
         return self.sftp.listdir(str(path))
 
@@ -209,9 +197,41 @@ class SSHPath(AbstractRemotePath):
         else:
             super().rmdir()
 
+    def open(self, mode='r', buffering=-1, encoding=None, errors=None, newline=None) -> paramiko.SFTPFile:
+        """ Open a file on the remote server
 
-    def open(self, mode='r', buffering=-1) -> paramiko.SFTPFile:
+        Args:
+            mode (str, optional): [description]. Defaults to 'r'. The Python 'b' flag is ignored, since SSH treats all files as binary.
+            buffering (int, optional): [description]. Defaults to -1.
+            encoding ([type], optional): [description]. Defaults to None.
+            errors ([type], optional): [description]. Defaults to None.
+            newline ([type], optional): [description]. Defaults to None.
+
+        Returns:
+            paramiko.SFTPFile: [description]
+        """
+        if encoding:
+            raise RuntimeError(
+                f"{self.__class__.__name__} doesn't support an 'encoding' parameter. "
+                f"The encoding of the file is assumed to be UTF-8."
+            )
+        if errors:
+            raise RuntimeError(
+                f"{self.__class__.__name__} doesn't support an 'errors' parameter."
+            )
+        if newline:
+            raise RuntimeError(
+                f"{self.__class__.__name__} doesn't support an 'newline' parameter."
+            )
         return self.sftp.open(str(self), mode=mode, bufsize=buffering)
+
+    def read_text(self, *args, **kwargs) -> str:
+        """ SSH treats all files as binary
+
+        Returns:
+            str: read result
+        """
+        return super().read_text(*args, kwargs).decode(encoding='utf-8')
 
     def touch(self, exist_ok=True):
         try:
