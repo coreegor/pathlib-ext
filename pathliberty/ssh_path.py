@@ -1,12 +1,8 @@
 from __future__ import annotations
-import contextlib
-import fnmatch
 from os import path
-from pathlib import PosixPath
-from time import time
 
 import paramiko
-from typing import Any, Callable, ContextManager, Dict, Iterable, Optional, Tuple, Union
+from typing import ContextManager, Dict, Iterable, Optional, Tuple, Union
 from pathliberty import AbstractPathAccessor
 from pathliberty import AbstractRemotePath
 from pathliberty.ssh import SSHSession
