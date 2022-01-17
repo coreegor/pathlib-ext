@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import abc
 from pathlib import PosixPath
-from typing import Sequence, TypeVar, Union
+from typing import Optional, Sequence, TypeVar, Union
 from datetime import datetime as datetime
 
 _PT = TypeVar('_PT')
@@ -121,8 +121,10 @@ class AbstractPath(PosixPath, metaclass=abc.ABCMeta):
         else:
             return timestamp
 
-    def chown(self, uid, gid):
+    def chown(self, uid: Optional[int] = None, gid: Optional[int] = None):
         """
         Change the owner (``uid``) and group (``gid``) of a file.
         """
+        uid = uid or self.stat().st_uid
+        gid = gid or self.stat().st_gid
         self._accessor.chown(self, uid, gid)
