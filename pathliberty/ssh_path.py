@@ -223,7 +223,10 @@ class SSHPath(AbstractRemotePath):
             raise RuntimeError(
                 f"{self.__class__.__name__} doesn't support an 'newline' parameter."
             )
-        return self.sftp.open(str(self), mode=mode, bufsize=buffering)
+        fp = self.sftp.open(str(self), mode=mode, bufsize=buffering)
+        if 'r' in mode:
+            fp.prefetch()
+        return fp
 
     def read_text(self, *args, **kwargs) -> str:
         """ SSH treats all files as binary
