@@ -6,6 +6,7 @@ import inspect
 from getpass import getuser
 from socket import gethostname
 from pathliberty import SSHPath
+from datetime import date, datetime
 
 host = 'localhost'
 parent = f'/home/{getuser()}'
@@ -42,6 +43,10 @@ def test_base(ssh_path):
     assert ssh_path.is_dir()
     assert ssh_path.host == host
     assert ssh_path.parent == SSHPath(parent, host=host)
+    assert ssh_path.getsize() > 0
+    today = datetime.today()
+    assert ssh_path.getmtime(dt=True).date() == today.date()
+    assert ssh_path.getatime(dt=True).date() == today.date()
 
 def test_touch(test_path):
     with pytest.raises(OSError):

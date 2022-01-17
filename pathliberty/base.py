@@ -2,7 +2,8 @@ from __future__ import annotations
 
 import abc
 from pathlib import PosixPath
-from typing import Sequence, TypeVar
+from typing import Sequence, TypeVar, Union
+from datetime import datetime as datetime
 
 _PT = TypeVar('_PT')
 
@@ -98,3 +99,23 @@ class AbstractPath(PosixPath, metaclass=abc.ABCMeta):
 
     def expanduser(self) -> AbstractPath:
         return self.new(super().expanduser())
+
+    def getsize(self):
+        """Return the size of a file, reported by self.stat()."""
+        return self.stat().st_size
+
+    def getmtime(self, dt: bool = False) -> Union[float, datetime]:
+        """Return the last modification time of a file, reported by self.stat()."""
+        timestamp = self.stat().st_mtime
+        if dt:
+            return datetime.fromtimestamp(timestamp)
+        else:
+            return timestamp
+
+    def getatime(self, dt: bool = False) -> Union[float, datetime]:
+        """Return the last access time of a file, reported by self.stat()."""
+        timestamp = self.stat().st_atime
+        if dt:
+            return datetime.fromtimestamp(timestamp)
+        else:
+            return timestamp
