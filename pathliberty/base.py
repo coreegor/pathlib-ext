@@ -21,6 +21,7 @@ class AbstractPathAccessor:
     listdir = raise_not_implemented
     scandir = raise_not_implemented
     chmod = raise_not_implemented
+    chown = raise_not_implemented
     lchmod = raise_not_implemented
     mkdir = raise_not_implemented
     unlink = raise_not_implemented
@@ -119,3 +120,9 @@ class AbstractPath(PosixPath, metaclass=abc.ABCMeta):
             return datetime.fromtimestamp(timestamp)
         else:
             return timestamp
+
+    def chown(self, uid, gid):
+        """
+        Change the owner (``uid``) and group (``gid``) of a file.
+        """
+        self._accessor.chown(self, uid, gid)

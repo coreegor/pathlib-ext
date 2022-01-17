@@ -124,6 +124,8 @@ class SSHAccessor(AbstractPathAccessor):
     def readlink(self, path):
         return self.sftp.readlink(str(path))
 
+    def chown(self, path, uid, gid):
+        self.sftp.chown(str(path), uid, gid)
 
 
 class SSHPath(AbstractRemotePath):

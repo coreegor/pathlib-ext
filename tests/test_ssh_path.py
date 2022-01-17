@@ -1,4 +1,5 @@
 
+import os
 import pwd
 import string
 import pytest
@@ -47,6 +48,9 @@ def test_base(ssh_path):
     today = datetime.today()
     assert ssh_path.getmtime(dt=True).date() == today.date()
     assert ssh_path.getatime(dt=True).date() == today.date()
+
+def test_chown(ssh_path):
+    ssh_path.chown(os.getuid(), os.getgid())
 
 def test_touch(test_path):
     with pytest.raises(OSError):
