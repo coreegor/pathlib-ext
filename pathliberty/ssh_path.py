@@ -269,3 +269,9 @@ class SSHPath(AbstractRemotePath):
     # def rglob(self, pattern: str):
     #     l = self.recursive_iterdir()
     #     return fnmatch.filter(map(str, l), pattern)
+
+    def get(self, localpath):
+        self.sftp.get(str(self), localpath)
+
+    def put(self, localpath) -> paramiko.SFTPAttributes:
+        return self.sftp.put(localpath, str(self))
