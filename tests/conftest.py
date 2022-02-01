@@ -15,7 +15,7 @@ def setup_port(request):
     
 @pytest.fixture
 def ssh_session(request):
-
+    ssh_config.DEFAULT_CONNECTION_TIMEOUT = 1.0
     ssh = SSHSession(
         request.config.getoption('--host'),
         password=request.config.getoption('--password'),
