@@ -90,8 +90,8 @@ class SSHAccessor(AbstractPathAccessor):
 
         return _ScandirIterator(path)
 
-    def chmod(self, mode):
-        self.sftp.chmod(self(str), mode)
+    def chmod(self, path, mode):
+        self.sftp.chmod(str(path), mode)
 
     def mkdir(self, path, mode=0o777):
         self.sftp.mkdir(str(path), mode=mode)

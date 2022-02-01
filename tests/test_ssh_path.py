@@ -52,6 +52,9 @@ def test_base(ssh_path):
 def test_chown(ssh_path):
     ssh_path.chown(os.getuid(), os.getgid())
 
+def test_chmod(ssh_path):
+    ssh_path.chmod(mode=0o770)
+
 def test_touch(test_path):
     with pytest.raises(OSError):
         test_path.mkdir()
