@@ -159,6 +159,9 @@ class SSHPath(AbstractRemotePath):
         if (self.ssh.host, self.ssh.proxy) == (other.ssh.host, other.ssh.proxy):
             return True
 
+    def __repr__(self):
+        return f"{self.__class__.__name__}({self.host}[proxy={self.proxy}]:{self.as_posix()})"
+
     @property
     def sftp(self) -> paramiko.SFTPClient:
         return self.ssh.sftp
