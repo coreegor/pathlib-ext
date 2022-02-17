@@ -15,3 +15,5 @@ from pathliberty.ssh_path import (
     SSHAccessor,
     SSHPath
 )
+
+from pathliberty.ssh import SSHError
