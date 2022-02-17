@@ -18,7 +18,7 @@ def get_func_name():
 @pytest.fixture
 def ssh_path(ssh_session):
     root = SSHPath(f'{parent}/{gethostname()}', ssh=ssh_session)
-    root.mkdir(exist_ok=True)
+    root.mkdir(mode=0o770, exist_ok=True)
     assert root.is_dir()
     yield root
     root.rmdir(recursive=True)
