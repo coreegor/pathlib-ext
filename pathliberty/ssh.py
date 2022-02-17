@@ -3,6 +3,9 @@ import getpass
 from typing import Optional
 from pathliberty import ssh_config
 
+class SSHError(Exception): pass
+
+
 def get_ssh_client(
     dest_host: str,
     *,
@@ -64,7 +67,7 @@ def get_ssh_client_through_proxy(
     """
     dest_port = dest_port or ssh_config.DEFAULT_PORT
     jump_port = jump_port or ssh_config.DEFAULT_PORT
-    
+
     jclient = paramiko.SSHClient()
     jclient.set_missing_host_key_policy(paramiko.AutoAddPolicy())
     jclient.connect(hostname=jump_host, username=username, password=password, port=jump_port, timeout=ssh_config.DEFAULT_CONNECTION_TIMEOUT)
@@ -136,15 +139,18 @@ class SSHSession:
         jump_host: Optional[str] = None,
         jump_port: Optional[int] = None,
     ):
+        try:
+            self.client = get_ssh(
+                dest_host,
+                username=username,
+                password=password,
+                dest_port=dest_port,
+                jump_host=jump_host,
+                jump_port=jump_port,
+            )
 
-        self.client = get_ssh(
-            dest_host,
-            username=username,
-            password=password,
-            dest_port=dest_port,
-            jump_host=jump_host,
-            jump_port=jump_port,
-        )
+        except Exception as e:
+            raise SSHError(e) from e
 
         self.host = dest_host
         self.proxy = jump_host
@@ -160,7 +166,8 @@ class SSHSession:
         return self._sftp
 
     def __del__(self):
-        self.client.close()
+        if hasattr(self, 'client'):
+            self.client.close()
 
     def exec(self, command: str) -> str:
         _, stdout, stderr = self.client.exec_command(
@@ -173,7 +180,7 @@ class SSHSession:
         if not status:
             return stdout.read().decode().strip()
         else:
-            raise RuntimeError(stderr.read().decode())
+            raise SSHError(stderr.read().decode())
 
     @property
     def home(self):
